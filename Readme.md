@@ -27,7 +27,7 @@ The function looks for the department in the departments list that is equal to d
 
 # İstenilen Çıktı ve Sonuç
 
-![İstenilen Görev](WhatsApp%20Image%202023-11-08%20at%2010.00.08.jpeg)
+![İstenilen Görev](./Interview/WhatsApp%20Image%202023-11-08%20at%2010.00.08.jpeg)
 
-![Console Çıktısı](Ekran%20görüntüsü%202023-11-12%20121909.png)
+![Console Çıktısı](./Interview/Ekran%20görüntüsü%202023-11-12%20121909.png)
 
