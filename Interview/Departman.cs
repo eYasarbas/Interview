@@ -21,48 +21,6 @@ public class Departman
     public List<Calisan> Calisanlar { get; set; } = new();
     public List<Departman> AltDepartmanlar { get; set; } = new();
 
-    public void PrintCalisanlarByKademeAndEvId(List<Departman> departmanlar, List<Calisan> kisiler)
-    {
-        var departmanlarByKademe = departmanlar.GroupBy(d => d._kademe).OrderBy(g => g.Key)
-            .ToDictionary(g => g.Key, g => g.ToList());
-
-        foreach (var grup in departmanlarByKademe)
-        {
-            Console.WriteLine($"Kademe {grup.Key}:");
-            foreach (var departman in grup.Value)
-            {
-                var departmanCalisanlar = kisiler.Where(k => k._departmanId == departman._depertmantId).ToList();
-                var ayniEvdeCalisanlar = departmanCalisanlar.GroupBy(c => c._evId);
-
-                foreach (var g in ayniEvdeCalisanlar)
-                {
-                    foreach (var calisan in g)
-                    {
-                        Console.WriteLine(calisan._name + "  " + calisan._evId);
-                    }
-                }
-
-                Console.WriteLine();
-            }
-        }
-    }
-
-    public List<Calisan> GetAyniEvdeCalisanlar(List<Calisan> calisanList)
-    {
-        var ayniEvdeCalisanlar = new List<Calisan>();
-
-        var gruplar = calisanList.GroupBy(c => c._evId);
-
-        foreach (var grup in gruplar)
-        {
-            if (grup.Count() > 1)
-            {
-                ayniEvdeCalisanlar.AddRange(grup);
-            }
-        }
-
-        return ayniEvdeCalisanlar;
-    }
     public List<Calisan> GetCalisanlarByDepartmanId(int departmanId, List<Departman> departmanlar, List<Calisan> kisiler)
     {
         var calisanlar = new List<Calisan>();
@@ -90,5 +48,32 @@ public class Departman
         return calisanlar;
     }
 
+
+    public void FindEmployeesInSameHouseAndRank(List<Departman> departments, List<Calisan> employees)
+    {
+        var groupedDepartments = departments.GroupBy(d => d._kademe);
+
+        foreach (var departmentGroup in groupedDepartments)
+        {
+            var currentDepartmentList = departmentGroup.ToList();
+            var matchedEmployees = employees
+                .Join(currentDepartmentList, e => e._departmanId, d => d._depertmantId, (e, d) =>
+                    new { EmployeeId = e._userId, HouseId = e._evId, DepartmanKademe = d._kademe });
+            var groupedHouses = matchedEmployees.GroupBy(e => e.HouseId);
+            foreach (var houseGroup in groupedHouses)
+            {
+                if (houseGroup.Count() > 1)
+                {
+                    foreach (var employee in houseGroup)
+                    {
+                        Console.WriteLine($"Calışan Id: {employee.EmployeeId}, Ev Id: {employee.HouseId}, Departman Kademe: {employee.DepartmanKademe}");
+                    }
+                }
+            }
+
+        }
+    }
+
 }
+
 

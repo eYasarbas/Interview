@@ -38,6 +38,8 @@ public class Program
             new() { _userId = 8, _name = "Kisi8", _departmanId = 4, _evId = 1 },
             new() { _userId = 9, _name = "Kisi9", _departmanId = 5, _evId = 3 },
             new() { _userId = 10, _name = "Kisi10", _departmanId = 2, _evId = 6 },
+            new() { _userId = 11, _name = "Kisi11", _departmanId = 8, _evId = 6 },
+
 
         };
         var listEv = new Ev();
@@ -54,13 +56,9 @@ public class Program
 
 
 
-        Console.WriteLine("\nHem aynı kademede hem de aynı evde yaşayan çalışanlar:\n");
-        listDepartman.PrintCalisanlarByKademeAndEvId(depertmantlar, kisiler);
-        /*foreach (var calisan in ayniKademeEv)
-        {
-            Console.WriteLine($"{calisan._name} departmanId:  {calisan._departmanId}");
-        }
-        */
+
+        Console.WriteLine("\nAynı kademeye sahip çalışanlar listesi\n");
+        listDepartman.FindEmployeesInSameHouseAndRank(depertmantlar, kisiler);
 
     }
 }
